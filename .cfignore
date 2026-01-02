@@ -1,0 +1,5 @@
+# 忽略大型模型文件（模型已托管在 R2 CDN）
+models/ship.glb
+models/ship_optimized.glb
+public/models/ship.glb
+public/models/ship_optimized.glb
