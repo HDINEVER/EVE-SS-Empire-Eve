@@ -26,25 +26,26 @@ const useWindowSize = () => {
 
 const EveUI: React.FC<EveUIProps> = ({ stats, currentMode, onModeChange, isRotating, onToggleRotation }) => {
   const [activeTab, setActiveTab] = useState<'attributes' | 'fitting'>('attributes');
-  const [leftCollapsed, setLeftCollapsed] = useState(false);
-  const [rightCollapsed, setRightCollapsed] = useState(false);
+  const [leftHovered, setLeftHovered] = useState(false);
+  const [rightHovered, setRightHovered] = useState(false);
   const { width } = useWindowSize();
 
-  // Auto-collapse panels when window is small
+  // Screen size breakpoints
   const isSmallScreen = width < 900;
   const isMediumScreen = width < 1200;
 
-  // Calculate dynamic offset based on screen size
+  // Panels auto-hide on small screens, show on hover
+  const shouldAutoHide = isSmallScreen;
+
+  // Calculate dynamic offset based on screen size and hover state
   const getLeftOffset = () => {
-    if (leftCollapsed) return -280;
-    if (isSmallScreen) return -200;
-    return 0;
+    if (!shouldAutoHide) return 0; // Always visible on large screens
+    return leftHovered ? 0 : -240; // Hide when not hovered on small screens
   };
 
   const getRightOffset = () => {
-    if (rightCollapsed) return 280;
-    if (isSmallScreen) return 200;
-    return 0;
+    if (!shouldAutoHide) return 0; // Always visible on large screens
+    return rightHovered ? 0 : 240; // Hide when not hovered on small screens
   };
 
   return (
@@ -110,7 +111,9 @@ const EveUI: React.FC<EveUIProps> = ({ stats, currentMode, onModeChange, isRotat
           className="flex items-end gap-1 pointer-events-auto"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: getLeftOffset() }}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+          onMouseEnter={() => setLeftHovered(true)}
+          onMouseLeave={() => setLeftHovered(false)}
         >
           <div className={`bg-slate-900/90 backdrop-blur-md border-l-2 border-cyan-600 shadow-[0_0_15px_rgba(0,0,0,0.5)] relative overflow-hidden ${isSmallScreen ? 'p-2 w-56' : 'p-4 w-72'}`}>
             {/* Decorative glitch lines */}
@@ -159,20 +162,12 @@ const EveUI: React.FC<EveUIProps> = ({ stats, currentMode, onModeChange, isRotat
             </div>
           </div>
           
-          {/* Left Toggle Button */}
-          <motion.button
-            onClick={() => setLeftCollapsed(!leftCollapsed)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-slate-900/90 backdrop-blur-md border border-slate-700 p-1.5 sm:p-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-          >
-            <motion.div
-              animate={{ rotate: leftCollapsed ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronLeft size={isSmallScreen ? 14 : 18} />
-            </motion.div>
-          </motion.button>
+          {/* Left Hover Trigger Area (visible on small screens when panel is hidden) */}
+          {shouldAutoHide && !leftHovered && (
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-cyan-500/20 to-transparent flex items-center justify-center">
+              <ChevronRight size={16} className="text-cyan-400 animate-pulse" />
+            </div>
+          )}
         </motion.div>
 
         {/* Right Panel: Ship Stats */}
@@ -180,22 +175,16 @@ const EveUI: React.FC<EveUIProps> = ({ stats, currentMode, onModeChange, isRotat
           className="flex items-end gap-1 pointer-events-auto"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: getRightOffset() }}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          transition={{ type: "spring", stiffness: 200, damping: 25 }}
+          onMouseEnter={() => setRightHovered(true)}
+          onMouseLeave={() => setRightHovered(false)}
         >
-          {/* Right Toggle Button */}
-          <motion.button
-            onClick={() => setRightCollapsed(!rightCollapsed)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-slate-900/90 backdrop-blur-md border border-slate-700 p-1.5 sm:p-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-          >
-            <motion.div
-              animate={{ rotate: rightCollapsed ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronRight size={isSmallScreen ? 14 : 18} />
-            </motion.div>
-          </motion.button>
+          {/* Right Hover Trigger Area (visible on small screens when panel is hidden) */}
+          {shouldAutoHide && !rightHovered && (
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-cyan-500/20 to-transparent flex items-center justify-center">
+              <ChevronLeft size={16} className="text-cyan-400 animate-pulse" />
+            </div>
+          )}
 
           <div className={`bg-slate-900/90 backdrop-blur-md border border-slate-700 shadow-2xl overflow-hidden rounded-tl-xl ${isSmallScreen ? 'w-56' : isMediumScreen ? 'w-64' : 'w-80'}`}>
             {/* Header Tabs */}

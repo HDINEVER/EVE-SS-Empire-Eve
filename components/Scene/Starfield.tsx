@@ -1,23 +1,41 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { Stars, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 
-const Starfield = () => {
+// Nebula background sphere - wrapped in Suspense so it won't block render
+const NebulaSphere = () => {
   const meshRef = useRef<THREE.Mesh>(null);
+  // Using a public domain space image that's reliable
+  const texture = useLoader(
+    THREE.TextureLoader,
+    'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=2048&q=80'
+  );
+
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y -= delta * 0.003;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[120, 64, 64]} />
+      <meshBasicMaterial
+        map={texture}
+        side={THREE.BackSide}
+        toneMapped={false}
+        opacity={0.8}
+        transparent
+      />
+    </mesh>
+  );
+};
+
+const Starfield = () => {
   const starsRef = useRef<THREE.Group>(null);
-  
-  // Load the galaxy texture. 
-  // We use a high-res ESO image of the Carina Nebula which matches the "Fire & Ice" aesthetic.
-  // You can replace this URL with your own image link.
-  const texture = useLoader(THREE.TextureLoader, 'https://cdn.eso.org/images/screen/eso1137a.jpg');
 
   useFrame((state, delta) => {
-    // Slow, majestic rotation of the entire universe background
-    if (meshRef.current) {
-      meshRef.current.rotation.y -= delta * 0.005;
-    }
-    
     // Parallax effect for the 3D stars layer
     if (starsRef.current) {
        starsRef.current.rotation.y -= delta * 0.01;
@@ -26,18 +44,11 @@ const Starfield = () => {
 
   return (
     <group>
-      {/* 1. The Texture-Mapped Background Galaxy */}
-      <mesh ref={meshRef}>
-        {/* Large sphere to act as the skybox */}
-        <sphereGeometry args={[120, 64, 64]} />
-        <meshBasicMaterial 
-          map={texture} 
-          side={THREE.BackSide} 
-          toneMapped={false} // Keep colors vivid
-        />
-      </mesh>
+      {/* Nebula background - isolated in its own Suspense */}
+      <Suspense fallback={null}>
+        <NebulaSphere />
+      </Suspense>
 
-      {/* 2. Main Star Cluster (Preserved from previous background) */}
       <group ref={starsRef}>
         {/* Standard Starfield */}
         <Stars 
