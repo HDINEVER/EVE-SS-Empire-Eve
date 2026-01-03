@@ -90,7 +90,7 @@ const SceneViewer: React.FC<SceneViewerProps> = ({ mode, isRotating, shipConfig,
           enablePan={mode === ViewMode.TACTICAL}
           enableZoom={true}
           minDistance={3}
-          maxDistance={20}
+          maxDistance={40}
           autoRotate={isRotating}
           autoRotateSpeed={0.5}
         />

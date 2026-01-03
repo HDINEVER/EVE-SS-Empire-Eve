@@ -14,7 +14,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Amarr Empire',
     faction: 'amarr',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Imperial Issue",
       class: "Battleship",
@@ -38,7 +38,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Amarr Empire',
     faction: 'amarr',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Paladin",
       class: "Marauder",
@@ -62,7 +62,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Amarr Empire',
     faction: 'amarr',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.5,
+    scale: 1.9,
     stats: {
       name: "Avatar",
       class: "Titan",
@@ -88,7 +88,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Caldari State',
     faction: 'caldari',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Naga",
       class: "Battlecruiser",
@@ -112,7 +112,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Caldari State',
     faction: 'caldari',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Cerberus",
       class: "Heavy Assault Cruiser",
@@ -136,7 +136,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Caldari State',
     faction: 'caldari',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Corax",
       class: "Destroyer",
@@ -162,7 +162,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Gallente Federation',
     faction: 'gallente',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Tristan",
       class: "Frigate",
@@ -186,7 +186,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Gallente Federation',
     faction: 'gallente',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Thalia",
       class: "Logistics Frigate",
@@ -210,7 +210,7 @@ export const SHIP_CONFIGS: Record<string, ShipConfig> = {
     manufacturer: 'Gallente Federation',
     faction: 'gallente',
     modelPath: DEFAULT_MODEL_URL,
-    scale: 1.0,
+    scale: 1.3,
     stats: {
       name: "Atron",
       class: "Interceptor",

@@ -18,7 +18,7 @@ interface SpaceshipProps {
 
 const Spaceship: React.FC<SpaceshipProps> = ({ 
   modelPath, 
-  scale = 2.5, 
+  scale = 3.2, 
   position = [0, 0, 0],
   rotation = [0, 0, 0]
 }) => {
