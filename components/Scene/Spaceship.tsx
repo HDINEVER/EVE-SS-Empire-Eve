@@ -6,8 +6,8 @@ import { Group } from 'three';
 // Draco 解码器路径 (Google CDN)
 const DRACO_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.6/';
 
-// 默认模型URL（Imperial Issue），使用同源 public 资源避免 CORS
-const DEFAULT_MODEL_URL = '/models/ship_optimized.glb';
+// 默认模型URL（Imperial Issue），从 R2 CDN 加载
+const DEFAULT_MODEL_URL = 'https://pub-ef918f4135654b1caa2833736c639ae1.r2.dev/eve-ss-empire-eve/models/ship_optimized.glb';
 
 interface SpaceshipProps {
   modelPath?: string;
